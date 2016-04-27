@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Memorandos
+            </ui:define>
+
+            <ui:define name="content">
+                <h:outputLabel value="Lista de memorandos" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <h:form id="MemorandoListForm" style="font-size: 12px;">
+                    <p:dataTable id="datalist" value="#{memorandoController.listar()}" 
+                                 var="item"
+                                 selectionMode="single" selection="#{memorandoController.selected}"
+                                 paginator="false"
+                                 rowKey="#{item.idmemorando}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="memorandosTable"
+                                 >
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <!--Global filter-->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('memorandosTable').filter()" style="width:150px" placeholder="Buscar..."/>
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <!--empleado documento-->
+                        <p:column filterBy="#{item.empleadodocumento}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMemorandoTitle_empleadodocumento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.empleadodocumento}"/>
+                        </p:column>
+                        <!--empleado nombres-->
+                        <p:column filterBy="#{item.empleadodocumento.nombres}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_nombres}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.empleadodocumento.nombres} #{item.empleadodocumento.apellidos}"/>
+                        </p:column>
+                        <!--fecha memorando-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMemorandoTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <!--observaciones memorando-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMemorandoTitle_observaciones}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.observaciones}"/>
+                        </p:column>
+
+                        <!--footer-->
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{memorandoController.prepareCreate}" update=":MemorandoCreateForm" oncomplete="PF('MemorandoCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MemorandoViewForm" oncomplete="PF('MemorandoViewDialog').show()" disabled="#{empty memorandoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MemorandoEditForm" oncomplete="PF('MemorandoEditDialog').show()" disabled="#{empty memorandoController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{memorandoController.borradoLogico()}" update=":growl,datalist" disabled="#{empty memorandoController.selected}">
+                                <p:confirm message="Èsta Seguro de eliminar el Memorando" header="Aviso" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                
+
+                <ui:include src="Create.xhtml"/>
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

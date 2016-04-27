@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{transportadorController.limpiarT()}"></f:event>
+        </f:metadata>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Crear Transportador
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 70%;"> 
+                    <i class="fa fa-list fa-2x" style="color: #D9534F; ">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="Transportadorr?faces-redirect=true" value="Ver todos los transportadores"> </h:commandLink></i>
+                </h:form>
+                 <h:outputLabel value="Nuevo Transportador" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <hr/>
+                <center>
+                    <h:form>
+                        <div class="form-group">
+                            <label>Documento</label>
+                            <p:inputText type="number" style="width: 300px;" class="form-control" id="documento" value="#{transportadorController.selected.documento}" title="#{bundle.CreateTransportadorTitle_documento}" required="true" requiredMessage="#{bundle.CreateTransportadorRequiredMessage_documento}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <p:inputText style="width: 300px;" class="form-control" id="nombres" value="#{transportadorController.selected.nombres}" title="#{bundle.CreateTransportadorTitle_nombres}" required="true" requiredMessage="#{bundle.CreateTransportadorRequiredMessage_nombres}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Apellidos</label>
+                            <p:inputText style="width: 300px;" class="form-control" id="apellidos" value="#{transportadorController.selected.apellidos}" title="#{bundle.CreateTransportadorTitle_apellidos}" required="true" requiredMessage="#{bundle.CreateTransportadorRequiredMessage_apellidos}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <p:inputText type="number" style="width: 300px;" class="form-control" id="telefono" value="#{transportadorController.selected.telefono}" title="#{bundle.CreateTransportadorTitle_telefono}" required="true" requiredMessage="#{bundle.CreateTransportadorRequiredMessage_telefono}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <p:inputText style="width: 300px;" class="form-control" id="direccion" value="#{transportadorController.selected.direccion}" title="#{bundle.CreateTransportadorTitle_direccion}" required="true" requiredMessage="#{bundle.CreateTransportadorRequiredMessage_direccion}"/>
+                        </div>
+                        <h:commandButton class="btn btn-success" value="Guardar Transportador" type="submit" style="background-color: #D9534F; border: none;" actionListener="#{transportadorController.create}" action="#{transportadorController.limpiarT()}"/>
+                    </h:form>
+                </center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

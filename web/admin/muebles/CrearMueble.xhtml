@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{mueblesController.limpiarM()}"></f:event>
+        </f:metadata>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                titulo
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 75%;"> 
+                    <i class="fa fa-list fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="Mueblee?faces-redirect=true" value="Ver todos los muebles"> </h:commandLink></i>
+                </h:form>
+               <h:outputLabel value="Crear mueble" style="color: #D9534F; font-size:25px; font-family:arial"/> 
+                <hr/>
+                <center>
+                    <h:form>
+                        <div class="form-group">
+                            <label>Nombre del mueble</label>
+                            <h:inputText class="form-control" style="width: 300px;" id="tipoMueble" value="#{mueblesController.selected.tipoMueble}" title="#{bundle.CreateMueblesTitle_tipoMueble}" required="true" requiredMessage="#{bundle.CreateMueblesRequiredMessage_tipoMueble}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Descripcion del Mueble </label>
+                            <h:inputTextarea style="text-transform: capitalize; width: 500px;" onkeyup="javascript:this.value = this.value.();" class="form-control" id="detallesMueble" value="#{mueblesController.selected.detallesMueble}" title="#{bundle.CreateMueblesTitle_detallesMueble }" required="true" requiredMessage="#{bundle.CreateMueblesRequiredMessage_detallesMueble}"/>
+                        </div>
+                        <h:commandButton style="background-color:#D9534F; border: none; "  class="btn btn-success" value="Guardar Mueble" type="submit" actionListener="#{mueblesController.create}" action="#{mueblesController.limpiarM()}"/>
+                    </h:form>
+                </center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

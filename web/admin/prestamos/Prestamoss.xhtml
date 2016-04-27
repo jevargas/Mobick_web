@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Préstamos
+            </ui:define>
+
+            <ui:define name="content">
+                <h:outputLabel value="Lista de préstamos" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <h:form id="PrestamosListForm" style="font-size: 12px;">
+                    <p:dataTable id="datalist" value="#{prestamosController.listar()}" emptyMessage="No se econtraron prestamos" 
+                                 var="item"
+                                 selectionMode="single" selection="#{prestamosController.selected}"
+                                 paginator="false"
+                                 rowKey="#{item.idprestamos}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="prestamosTable"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <!--Global filter-->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('prestamosTable').filter()" style="width:150px" placeholder="Buscar..."/>
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <!--empleado documento-->
+                        <p:column filterBy="#{item.empleadodocumento}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPrestamosTitle_empleadodocumento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.empleadodocumento}"/>
+                        </p:column>
+                        <!--nombres empleado-->
+                        <p:column filterBy="#{item.empleadodocumento.nombres}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_nombres}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.empleadodocumento.nombres} #{item.empleadodocumento.apellidos}"/>
+                        </p:column>
+                        <!--fecha prestamo-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPrestamosTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <!--valor prestamo-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPrestamosTitle_valor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valor}"/>
+                        </p:column>
+                        <!--cancelado-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPrestamosTitle_cancelado}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.cancelado}" disabled="true"/>
+                        </p:column>
+                        
+                        <!--footer-->
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{prestamosController.prepareCreate}" update=":PrestamosCreateForm" oncomplete="PF('PrestamosCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PrestamosViewForm" oncomplete="PF('PrestamosViewDialog').show()" disabled="#{empty prestamosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PrestamosEditForm" oncomplete="PF('PrestamosEditDialog').show()" disabled="#{empty prestamosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{prestamosController.borradoLogico()}" update=":growl,datalist" disabled="#{empty prestamosController.selected}">
+                                <p:confirm message="Èsta Seguro de eliminar el Prestamo" header="Aviso" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                
+
+                 
+                <ui:include src="Create.xhtml"/>
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

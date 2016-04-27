@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorasExtrasViewDlg" widgetVar="HorasExtrasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewHorasExtrasTitle}">
+            <h:form id="HorasExtrasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{horasExtrasController.selected != null}">
+                        <h:outputText value="#{bundle.ViewHorasExtrasLabel_fecha}"/>
+                        <h:outputText value="#{horasExtrasController.selected.fecha}" title="#{bundle.ViewHorasExtrasTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewHorasExtrasLabel_cantHoras}"/>
+                        <h:outputText value="#{horasExtrasController.selected.cantHoras}" title="#{bundle.ViewHorasExtrasTitle_cantHoras}"/>
+                        <h:outputText value="#{bundle.ViewHorasExtrasLabel_valorHoraExtra}"/>
+                        <h:outputText value="#{horasExtrasController.selected.valorHoraExtra}" title="#{bundle.ViewHorasExtrasTitle_valorHoraExtra}"/>
+                        <h:outputText value="#{bundle.ViewHorasExtrasLabel_cancelado}"/>
+                        <p:selectBooleanCheckbox value="#{horasExtrasController.selected.cancelado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewHorasExtrasLabel_empleadodocumento}"/>
+                        <h:outputText value="#{horasExtrasController.selected.empleadodocumento}" title="#{bundle.ViewHorasExtrasTitle_empleadodocumento}"/>
+                        <h:outputText value="#{bundle.ViewEmpleadoTitle_nombres}"/>
+                        <h:outputText value="#{horasExtrasController.selected.empleadodocumento.nombres}" title="#{bundle.ViewEmpleadoLabel_nombres}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="HorasExtrasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

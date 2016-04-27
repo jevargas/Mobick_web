@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamosCreateDlg" widgetVar="PrestamosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePrestamosTitle}">
+            <h:form id="PrestamosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{prestamosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePrestamosLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{prestamosController.selected.fecha}" title="#{bundle.EditPrestamosTitle_fecha}" required="true" requiredMessage="#{bundle.EditPrestamosRequiredMessage_fecha}" locale="es" mask="99/99/99" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePrestamosLabel_valor}" for="valor" />
+                        <p:inputText type="number" id="valor" value="#{prestamosController.selected.valor}" title="#{bundle.CreatePrestamosTitle_valor}" required="true" requiredMessage="#{bundle.CreatePrestamosRequiredMessage_valor}"/>
+                        <p:outputLabel value="#{bundle.CreatePrestamosLabel_cancelado}" for="cancelado" />
+                        <p:selectBooleanCheckbox id="cancelado" value="#{prestamosController.selected.cancelado}" required="true" requiredMessage="#{bundle.EditPrestamosRequiredMessage_cancelado}"/>
+                        <p:outputLabel value="#{bundle.CreatePrestamosLabel_empleadodocumento}" for="empleadodocumento" />
+                        <p:selectOneMenu id="empleadodocumento" value="#{prestamosController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditPrestamosRequiredMessage_empleadodocumento}">
+                            <f:selectItems value="#{empleadoController.listar()}"
+                                           var="empleadodocumentoItem"
+                                           itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres} #{empleadodocumentoItem.apellidos}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prestamosController.create}" value="#{bundle.Save}" update="display,:PrestamosListForm:datalist,:growl" oncomplete="PF('PrestamosCreateDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PrestamosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

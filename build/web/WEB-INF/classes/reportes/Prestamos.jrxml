@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0357dfcb-191f-4f74-af45-2194fba7fe5d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DocumentoPres" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+      empleado.`documento` AS empleado_documento,
+     empleado.`nombres` AS empleado_nombres,
+     empleado.`apellidos` AS empleado_apellidos,
+     cargo.`nombre_cargo` AS cargo_nombre_cargo,
+     prestamos.`fecha` AS prestamos_fecha,
+     prestamos.`valor` AS prestamos_valor,
+     prestamos.`cancelado` AS prestamos_cancelado
+FROM
+     `cargo` cargo INNER JOIN `empleado` empleado ON cargo.`idcargo` = empleado.`cargo_idcargo`
+     INNER JOIN `prestamos` prestamos ON empleado.`documento` = prestamos.`Empleado_documento`
+WHERE  empleado.`documento` LIKE "$P!{DocumentoPres}%"]]>
+	</queryString>
+	<field name="empleado_documento" class="java.lang.Integer"/>
+	<field name="empleado_nombres" class="java.lang.String"/>
+	<field name="empleado_apellidos" class="java.lang.String"/>
+	<field name="cargo_nombre_cargo" class="java.lang.String"/>
+	<field name="prestamos_fecha" class="java.sql.Date"/>
+	<field name="prestamos_valor" class="java.lang.Integer"/>
+	<field name="prestamos_cancelado" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="131" splitType="Stretch">
+			<image>
+				<reportElement x="36" y="12" width="253" height="119" uuid="d6605b31-3e18-4cc9-91f7-43c4cdeba04d"/>
+				<imageExpression><![CDATA["C:\\Users\\ew\\Documents\\NetBeansProjects\\aplicativo_mobick\\web\\resources\\img\\logoEmpresa.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="562" y="41" width="240" height="42" uuid="81a23308-879e-4ba5-8d35-aeb4a1786069"/>
+				<textElement>
+					<font fontName="Arial Rounded MT Bold" size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte Prestamos]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="694" y="89" width="108" height="20" uuid="51afe6c0-c5f9-4c81-bb95-32aea1bc06ae"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="289" y="6" width="204" height="20" uuid="d22d3b9b-4f27-43c8-96b2-df21f33b19aa"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Documento Empleado: "+ $P{DocumentoPres}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="9" width="802" height="39" backcolor="#CEB593" uuid="55cbe584-f115-4c7b-82bb-e7694e6ecf61"/>
+				<staticText>
+					<reportElement x="63" y="10" width="100" height="20" uuid="c94bad00-26e3-4407-b723-6b6ccc900f88"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[nombres]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="174" y="10" width="100" height="20" uuid="81c28d96-7761-4078-a3db-d0e568bb632a"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[apellidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="290" y="10" width="100" height="20" uuid="a1877822-1f2f-4bb1-9e50-77c8bd8290f3"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[cargo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="404" y="10" width="100" height="20" uuid="64dde8db-d8ba-4633-be73-9cfac6c0b2b6"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="520" y="10" width="100" height="20" uuid="524790cb-b7e4-4c59-a500-72e72ef2e88b"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="637" y="10" width="100" height="20" uuid="79ffef54-fb11-4f86-ab31-b2a5bf1daf10"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[prestamo cancelado]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="10" width="802" height="42" backcolor="#BB8B4B" uuid="c5315b04-5976-4595-9dee-4df04dc1afcc"/>
+				<textField>
+					<reportElement x="63" y="9" width="100" height="20" uuid="082172fb-1ded-4112-9bce-3d31242bd5e8"/>
+					<textFieldExpression><![CDATA[$F{empleado_nombres}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="174" y="9" width="100" height="20" uuid="590357d9-670d-429e-bf71-83f36265d574"/>
+					<textFieldExpression><![CDATA[$F{empleado_apellidos}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="290" y="9" width="100" height="20" uuid="32d4bda1-38ac-49f3-bbea-54f5743ce28f"/>
+					<textFieldExpression><![CDATA[$F{cargo_nombre_cargo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="404" y="9" width="100" height="20" uuid="4e09216f-9880-4506-860b-7992d46d1bbc"/>
+					<textFieldExpression><![CDATA[$F{prestamos_fecha}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="520" y="9" width="100" height="20" uuid="69ca1440-1efe-4a52-9a12-9e5a267683bd"/>
+					<textFieldExpression><![CDATA[$F{prestamos_valor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="637" y="9" width="100" height="20" uuid="fd6a6d3e-0caa-4910-9562-134eca594b62"/>
+					<textFieldExpression><![CDATA[$F{prestamos_cancelado}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="34" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="756" y="7" width="40" height="20" uuid="769efe88-954d-4dd0-97fa-90847ee8779a"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="551" y="7" width="205" height="20" uuid="bb6754d2-e81b-4447-aa8c-6a3ed1847d78"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="43" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#CEB593" uuid="4a4ca3a1-8985-40b9-a02f-2a80a98dbc61"/>
+			</line>
+			<staticText>
+				<reportElement x="370" y="12" width="100" height="20" uuid="9556e84d-2a55-47f6-b935-75d50715d9bb"/>
+				<text><![CDATA[datos de la empresa]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

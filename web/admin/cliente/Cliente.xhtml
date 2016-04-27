@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="content">
+                <h:form style="margin-left: 83%;">
+                    <i class="fa fa-plus-circle fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="CrearCliente?faces-redirect=true" value="Nuevo Cliente"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Lista de clientes" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <hr/>
+                <h:form id="ClienteListForm" style="font-size: 12px;">
+                    <p:dataTable id="datalist" value="#{clienteController.listar()}" emptyMessage="No se econtraron clientes" 
+                                 var="item"
+                                 selectionMode="single" selection="#{clienteController.selected}"
+                                 paginator="false"
+                                 rowKey="#{item.documento}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="clientesTable"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton editButton deleteButton"/>
+
+                        <!--Global filter-->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('clientesTable').filter()" style="width:150px" placeholder="Buscar..."/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <!--documento-->
+                        <p:column filterBy="#{item.documento}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_documento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.documento}"/>
+                        </p:column>
+                        <!--nombres-->
+                        <p:column filterBy="#{item.nombres}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_nombres}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombres}"/>
+                        </p:column>
+                        <!--apellidos-->
+                        <p:column filterBy="#{item.apellidos}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_apellidos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellidos}"/>
+                        </p:column>
+                        <!--direccion-->
+                        <p:column filterBy="#{item.domicilio}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_domicilio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.domicilio}"/>
+                        </p:column>
+                        <!--telefono-->
+                        <p:column filterBy="#{item.telefono}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_telefono}" />
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <!--correo-->
+                        <p:column filterBy="#{item.correo}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClienteTitle_correo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.correo}"/>
+                        </p:column>
+
+                        <!--footer-->
+
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClienteViewForm" oncomplete="PF('ClienteViewDialog').show()" disabled="#{empty clienteController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClienteEditForm" oncomplete="PF('ClienteEditDialog').show()" disabled="#{empty clienteController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{clienteController.destroy()}" update=":growl,datalist" disabled="#{empty clienteController.selected}">
+                                <p:confirm message="Èsta Seguro de eliminar el Cliente" header="Aviso" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                
+
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

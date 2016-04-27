@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorasExtrasCreateDlg" widgetVar="HorasExtrasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateHorasExtrasTitle}">
+            <h:form id="HorasExtrasCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{horasExtrasController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateHorasExtrasLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{horasExtrasController.selected.fecha}" title="#{bundle.EditHorasExtrasTitle_fecha}" required="true" requiredMessage="#{bundle.EditHorasExtrasRequiredMessage_fecha}" locale="es" mask="99/99/99" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateHorasExtrasLabel_cantHoras}" for="cantHoras" />
+                        <p:inputText  type="number" id="cantHoras" value="#{horasExtrasController.selected.cantHoras}" title="#{bundle.CreateHorasExtrasTitle_cantHoras}" required="true" requiredMessage="#{bundle.CreateHorasExtrasRequiredMessage_cantHoras}"/>
+                        <p:outputLabel value="#{bundle.CreateHorasExtrasLabel_valorHoraExtra}" for="valorHoraExtra" />
+                        <p:inputText  type="number" id="valorHoraExtra" value="#{horasExtrasController.selected.valorHoraExtra}" title="#{bundle.CreateHorasExtrasTitle_valorHoraExtra}" required="true" requiredMessage="#{bundle.CreateHorasExtrasRequiredMessage_valorHoraExtra}"/>
+                        <p:outputLabel value="#{bundle.CreateHorasExtrasLabel_cancelado}" for="cancelado" />
+                        <p:selectBooleanCheckbox id="cancelado" value="#{horasExtrasController.selected.cancelado}" required="true" requiredMessage="#{bundle.EditHorasExtrasRequiredMessage_cancelado}"/>
+                        <p:outputLabel value="#{bundle.CreateEmpleadoLabel_nombres}" for="empleadodocumento" />
+                        <p:selectOneMenu id="empleadodocumento" value="#{horasExtrasController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditHorasExtrasRequiredMessage_empleadodocumento}">
+                            <f:selectItems value="#{empleadoController.listar()}"
+                                           var="empleadodocumentoItem"
+                                           itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres} #{empleadodocumentoItem.apellidos}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{horasExtrasController.create}" value="#{bundle.Save}" update="display,:HorasExtrasListForm:datalist,:growl" oncomplete="PF('HorasExtrasCreateDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HorasExtrasCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

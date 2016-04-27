@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Mobick</title>
+        <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <style>
+            body{
+                background-image: url("resources/img/bg_1.jpg");
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            form{
+                border-radius: 10px;
+                margin: 10px;
+                padding: 15px;
+
+            }
+            .margin{
+
+                margin-top:100px;
+                background-color:  #ffffff;
+                box-shadow: 1px 1px 4px black;
+            }
+            .form-control{
+                border: 1px solid;
+                box-shadow: 1px 1px 4px black;
+            }
+            .btn btn-lg btn-warning btn-block{
+                background-color: rgba(226,44,39,1); 
+                border: none;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <h:form class="form-signin col-md-4 margin">
+                    <center><img src="resources/img/logoSinFondon.png" width="300px"></img></center>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                    <center>
+                        <br>
+                            <br>
+
+                                <h:inputText  class="form-control"  value="#{usuarioLoginController.selected.usuario}" pt:placeholder="Usuario" required="true" rendered="true" requiredMessage="Ingrese usuario"/>
+                                <br></br>
+                                <h:inputSecret class="form-control" value="#{usuarioLoginController.selected.contrasena}" pt:placeholder="Password" required="true" rendered="true" requiredMessage="Ingrese Contraseña"/>
+                            </br>
+
+                        </br>
+                        <p:commandButton class="btn btn-lg btn-warning btn-block" style="background-color:#D64B47; border:none;"  value="Ingresar" action="#{usuarioLoginController.validarIngreso()}"/><br/>
+                        <br/>
+
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <p:commandLink style="color: #000; font-size:15px; color:#605856; "  value="¿has olvidado tu contraseña?" onclick="PF('dlg1').show();" ></p:commandLink>
+                        </h:panelGrid>
+                    </center>
+                </h:form>
+
+
+                <p:dialog id="ventanaModal" header="Recuperar contraseña" widgetVar="dlg1" modal="true" height="200">
+                    <h:form>
+                        <h:outputText value="Correo: "/>
+                        <p:inputText  placeholder="correo" value="#{usuarioLoginController.verificarcorreo}"/><br/><br/>
+                        <center><p:commandButton value="enviar" action="#{usuarioLoginController.limpiarC()}" actionListener="#{usuarioLoginController.RecuperarContrasena()}" oncomplete="PF('dlg1').hide();" update="ventanaModal"/>
+                        </center>
+                    </h:form>
+
+                </p:dialog> 
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </h:body>
+</html>
+

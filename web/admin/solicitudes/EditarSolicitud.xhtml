@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+            
+            <ui:define name="titulo">
+                Editar Solicitud
+            </ui:define>
+            
+            <ui:define name="content">
+                <h:form style="margin-left: 75%; margin-top: 5px;">
+                    <i class="fa fa-list fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:5px; color: black;" action="Solicitud?faces-redirect=true" value="Ver todos las solicitudes"> </h:commandLink></i>
+                </h:form>
+                <center>  <h:outputLabel value="Diseño interior" style="color: #D9534F; font-size:25px; font-family:arial;"/><br/>
+                <h:outputLabel value="Solicitud Numero #{detallesSolicitudController.sol.idSolicitudes}" style="color: #D9534F; font-size:25px; font-family:arial;"/></center>
+                
+                <hr/>
+
+                <!-- Formulario Solicitud-->
+                <h:form>
+                    <!-- 1 columna-->
+                    <div class="col-md-6"> 
+                        <!-- Tipo De solicitud-->
+                        <div class="form-group">
+                            <label>Tipo de solicitud </label>
+                            <h:selectOneMenu style="width: 450px;" class="form-control" id="tipoSolicitudIdtipoSolicitud" value="#{detallesSolicitudController.sol.tipoSolicitudIdtipoSolicitud}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_tipoSolicitudIdtipoSolicitud}">
+                                <f:selectItems value="#{tipoSolicitudController.itemsAvailableSelectOne}"
+                                               var="tipoSolicitudIdtipoSolicitudItem"
+                                               itemValue="#{tipoSolicitudIdtipoSolicitudItem}" itemLabel="#{tipoSolicitudIdtipoSolicitudItem.descripcionSolicitud}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <!-- Cliente-->
+                        <div class="form-group" >
+                            <label> Documento del cliente</label><br/>
+                            <p:selectOneMenu class="form-group"  style="padding: 0px; width:450px;" filter="true" id="clientedocumento" value="#{detallesSolicitudController.sol.clientedocumento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_clientedocumento}" disabled="true">
+                                <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
+                                               var="clientedocumentoItem"
+                                               itemValue="#{clientedocumentoItem}" itemLabel="#{clientedocumentoItem.documento}" />
+                                <p:ajax update="nombress"/>
+                                <p:ajax update="apellidoss"/>
+                                <p:ajax update="domicilioo"/>
+                                <p:ajax update="telefonoo"/>
+                                <p:ajax update="correoo"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <!-- Datos del cliente-->
+                        <div class="form-group">
+                            <div class="panel panel-default" style="width: 450px;">
+                                <div class="panel-heading">
+                                    Datos del cliente :
+                                </div>
+                                <div>
+                                    <p:outputLabel style=" margin-left:20px ; " value="Nombre : #{detallesSolicitudController.sol.clientedocumento.nombres}" id="nombress"/>
+                                    <p:outputLabel style=" margin-left:20px ; " value="#{detallesSolicitudController.sol.clientedocumento.apellidos} " id="apellidoss"/><br/>
+                                    <p:outputLabel  style=" margin-left:20px;" value="Dirección : #{detallesSolicitudController.sol.clientedocumento.domicilio}" id="domicilioo"/><br/>
+                                    <p:outputLabel  style="  margin-left:20px;" value="Teléfono : #{detallesSolicitudController.sol.clientedocumento.telefono}" id="telefonoo"/><br/>
+                                    <p:outputLabel  style=" margin-left:20px;" value="Correo : #{detallesSolicitudController.sol.clientedocumento.correo}" id="correoo"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2 columna-->
+                    <div class="row col-md-6"  >
+                        <!--Fecha de entrega-->
+                        <div class="form-group">
+                            <label> Fecha De Entrega</label><br/>
+                            <p:calendar style="width:500px;" id="fechaEntrega" value="#{detallesSolicitudController.sol.fechaEntrega}" title="#{bundle.EditSolicitudesTitle_fechaEntrega}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_fechaEntrega}" mindate="fecha_valida" locale="es" mask="99/99/99" />
+                        </div>
+                        <!-- Empleado encargado-->
+                        <div class="form-group">
+                            <label>Empleado Encargado</label><br/>
+                            <p:selectOneMenu class="form-control" style="padding: 0px; width:500px;" filter="true" id="empleadodocumento" value="#{detallesSolicitudController.sol.empleadodocumento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_empleadodocumento}" disabled="true">
+                                <f:selectItems value="#{empleadoController.listar()}"
+                                               var="empleadodocumentoItem"
+                                               itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres} #{empleadodocumentoItem.apellidos}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <!-- Forma de pago-->
+                        <div class="form-group">
+                            <label>Forma de pago</label>
+                            <h:selectOneMenu style="width: 500px;" class="form-control" id="formadepagoidFormadepago" value="#{detallesSolicitudController.sol.formadepagoidFormadepago}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_formadepagoidFormadepago}">
+                                <f:selectItems value="#{formaDePagoController.itemsAvailableSelectOne}"
+                                               var="formadepagoidFormadepagoItem"
+                                               itemValue="#{formadepagoidFormadepagoItem}" itemLabel="#{formadepagoidFormadepagoItem.descripcionPago}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <!-- Transportador-->
+                        <div class="form-group">
+                            <h:selectOneMenu style="width: 500px;" class="form-control" id="transportadordocumento" value="#{detallesSolicitudController.sol.transportadordocumento.documento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_transportadordocumento}">
+                                <f:selectItems value="#{transportadorController.itemsAvailableSelectOne}"
+                                               var="transportadordocumentoItem"
+                                               itemValue="#{transportadordocumentoItem.documento}" itemLabel="#{transportadordocumentoItem.nombres}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <!-- Estado de Solicitud-->
+                        <div class="form-group" >
+                            <label>Estado de Solicitud</label>
+                            <h:selectOneMenu style="width: 500px;" class="form-control" id="estadoSolicitudIdestadoSolicitud" value="#{detallesSolicitudController.sol.estadoSolicitudIdestadoSolicitud}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_estadoSolicitudIdestadoSolicitud}">
+                                <f:selectItems value="#{estadoSolicitudController.itemsAvailableSelectOne}"
+                                               var="estadoSolicitudIdestadoSolicitudItem"
+                                               itemValue="#{estadoSolicitudIdestadoSolicitudItem}" itemLabel="#{estadoSolicitudIdestadoSolicitudItem.detallesEstado}"/>
+                            </h:selectOneMenu> 
+                        </div>
+                    </div>
+                    <h:commandButton style="margin-left: 5%; background-color:#D9534F; border: none; " value="Guardar Cambios"  class="btn btn-success" type="submit" actionListener="#{detallesSolicitudController.guardarEditar()}" action="#{detallesSolicitudController.limpiarS()}" />
+                </h:form>
+                <!-- FIN Formulario Solicitud-->
+                <hr/>
+                <!-- fin formulario Solicitud-->
+                <div class="row col-md-12">
+                    <h:form id="formDetalle">
+                        <!-- inicio de tabla-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b><center> Listado de muebles </center></b>
+                                <p:commandButton style="margin-left: 95%;" id="agregarDet" icon="ui-icon-plus" oncomplete="PF('agregarDetalleS').show()" />
+                            </div>
+                            <p:dataTable id="tablaDetalle" value="#{detallesSolicitudController.agregarDetalles}" var="detalle">
+                                <p:column headerText="Consecutivo">
+                                    <h:outputText value="#{detalle.consecutivo}"/>
+                                </p:column>
+
+                                <p:column headerText="Mueble">
+                                    <h:outputText value="#{detalle.mueblesidMuebles.tipoMueble}"/>
+                                </p:column>
+
+                                <p:column headerText="Detalles">
+                                    <h:outputText value="#{detalle.mueblesidMuebles.detallesMueble}"/>
+                                </p:column>
+
+                                <p:column headerText="Valor detalle">
+                                    <h:outputText value="$ #{detalle.valorDetalle}"/>
+                                </p:column>
+                                <p:column headerText="Eliminar Detalle" width="50px">
+                                    <center>
+                                        <p:commandButton value="X" action="#{detallesSolicitudController.retirarDetalle(detalle)}" update=":formDetalle:tablaDetalle:,valorTotal" />
+                                    </center>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <!-- fin tabla -->
+                    </h:form>
+                </div>
+                <!--Valor total-->
+                <div class="col-md-6" style="margin-left: 57%">
+                    <div class="panel panel-default" style="width: 248px">
+                        <label>Valor total</label>
+                        <h:outputText id="valorTotal" value=": $ #{detallesSolicitudController.cantidad_total}"/>
+                    </div>
+                </div>
+
+
+
+                <!--Modal Primefaces-->
+                <p:dialog id="dialogoDetalle" header="Agregar Detalle" widgetVar="agregarDetalleS" modal="true" >
+                    <h:form id="formDialogoDetalle">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_mueblesidMuebles}" for="mueblesidMuebles" />
+                            <p:selectOneMenu style="padding: 0px; width: 200px;" id="mueblesidMuebles" value="#{detallesSolicitudController.detalle.mueblesidMuebles}" required="true" requiredMessage="#{bundle.EditDetallesSolicitudRequiredMessage_mueblesidMuebles}">
+                                <f:selectItems value="#{mueblesController.itemsAvailableSelectOne}"
+                                               var="mueblesidMueblesItem"
+                                               itemValue="#{mueblesidMueblesItem}" itemLabel="#{mueblesidMueblesItem.tipoMueble}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_detallesSolicitud}" for="detallesSolicitud" />
+                            <p:inputTextarea  id="detallesSolicitud" value="#{detallesSolicitudController.detalle.detallesSolicitud}" title="#{bundle.CreateDetallesSolicitudTitle_detallesSolicitud}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_detallesSolicitud}"/>
+                            <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_valorDetalle}" for="valorDetalle" />
+                            <p:inputText id="valorDetalle" value="#{detallesSolicitudController.detalle.valorDetalle}" title="#{bundle.CreateDetallesSolicitudTitle_valorDetalle}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_valorDetalle}"/>
+                            <p:commandButton value="Agregar detalle" actionListener="#{detallesSolicitudController.agregar()}" update=":formDetalle:tablaDetalle,valorTotal" oncomplete="PF('agregarDetalleS').hide();"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+                <!--Modal Boostrap-->
+                <div class="panel-body">
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Agrear Nuevo Mueble</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        <h:form id="formDialogoDetallee">
+                                            <label>Seleccione un mueble</label><br/>
+                                            <h:selectOneMenu style="width: 300px;" id="mueblesidMuebles" value="#{detallesSolicitudController.detalle.mueblesidMuebles}" required="true" requiredMessage="#{bundle.EditDetallesSolicitudRequiredMessage_mueblesidMuebles}">
+                                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione un mueble" itemValue="#{null}"/>
+                                                <f:selectItems value="#{mueblesController.itemsAvailableSelectOne}"
+                                                               var="mueblesidMueblesItem"
+                                                               itemValue="#{mueblesidMueblesItem}" itemLabel="#{mueblesidMueblesItem.tipoMueble}"/>
+                                            </h:selectOneMenu><br/><br/>
+                                            <label>Detalle de solicitud</label><br/>
+                                            <h:inputTextarea style="width: 300px; height: 100px;" id="detallesSolicitud" value="#{detallesSolicitudController.detalle.detallesSolicitud}" title="Detalle de solicitud" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_detallesSolicitud}"/>
+                                            <br/>
+                                            <label>Valor detalle</label><br/>
+                                            <p:inputText style="width: 300px;" id="valorDetalle" type="Number" value="#{detallesSolicitudController.detalle.valorDetalle}" title="#{bundle.CreateDetallesSolicitudTitle_valorDetalle}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_valorDetalle}"/>
+                                            <br/> <br/>
+                                            <button type="button" style="width: 120px;height: 28px;" class="btn btn-default fa-1x" data-dismiss="modal">Cerrar</button>
+                                            <p:commandButton style="margin-left:5%;" value="Agregar detalle" class="btn btn-primary" actionListener="#{detallesSolicitudController.agregar()}" update=":formDetalle:tablaDetalle,valorTotal"/>
+                                        </h:form>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

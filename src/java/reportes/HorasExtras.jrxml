@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f0ab6d20-4b87-4a9e-a089-678effd7bcd4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="documento" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     empleado.`documento` AS empleado_documento,
+     empleado.`nombres` AS empleado_nombres,
+     empleado.`apellidos` AS empleado_apellidos,
+     horas_extras.`fecha` AS horas_extras_fecha,
+     horas_extras.`cant_horas` AS horas_extras_cant_horas,
+     horas_extras.`valor_hora_extra` AS horas_extras_valor_hora_extra,
+     horas_extras.`cancelado` AS horas_extras_cancelado,
+     cargo.`nombre_cargo` AS cargo_nombre_cargo
+FROM
+     `empleado` empleado INNER JOIN `horas_extras` horas_extras ON empleado.`documento` = horas_extras.`Empleado_documento`
+     INNER JOIN `cargo` cargo ON empleado.`cargo_idcargo` = cargo.`idcargo`
+
+WHERE   empleado.`documento`= $P{documento} and  horas_extras.`cancelado`=0]]>
+	</queryString>
+	<field name="empleado_documento" class="java.lang.Integer"/>
+	<field name="empleado_nombres" class="java.lang.String"/>
+	<field name="empleado_apellidos" class="java.lang.String"/>
+	<field name="horas_extras_fecha" class="java.sql.Date"/>
+	<field name="horas_extras_cant_horas" class="java.lang.Integer"/>
+	<field name="horas_extras_valor_hora_extra" class="java.lang.Integer"/>
+	<field name="horas_extras_cancelado" class="java.lang.Boolean"/>
+	<field name="cargo_nombre_cargo" class="java.lang.String"/>
+	<variable name="total" class="java.lang.Number">
+		<variableExpression><![CDATA[($F{horas_extras_cant_horas}*$F{horas_extras_valor_hora_extra})]]></variableExpression>
+	</variable>
+	<group name="empleado_documento">
+		<groupExpression><![CDATA[$F{empleado_documento}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="140" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="694" y="99" width="108" height="20" uuid="0505a7cf-244c-43dc-992a-bab8547ca75f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="34" y="9" width="253" height="119" uuid="22ed64a6-2552-464e-b2dd-891d8e954c2b"/>
+				<imageExpression><![CDATA["C:\\Users\\ew\\Documents\\NetBeansProjects\\aplicativo_mobick\\web\\resources\\img\\logoEmpresa.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="369" y="70" width="433" height="29" uuid="4cf30d79-b7f0-4b04-a8e5-dc72dd59bec2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Rounded MT Bold" size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte Horas Extras Por Cancelar]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="291" y="5" width="272" height="20" uuid="50994d82-1bdc-4988-95a0-f012c0d20bcf"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["documento empleado: "+ $P{documento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="43" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="37" backcolor="#CEB593" uuid="c470c161-f3ac-4419-a98f-4ad95b75a0a8"/>
+				<staticText>
+					<reportElement x="13" y="10" width="100" height="20" uuid="d8f3b335-3c8f-445c-bdd5-1c24ca2df17f"/>
+					<text><![CDATA[Docuemento]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="691" y="10" width="100" height="20" uuid="03a64677-03c2-4a9d-81b2-f64e46055ea1"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total A Pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="578" y="10" width="100" height="20" uuid="0f5f298d-e611-440f-ac3d-bb076b22bfe0"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Por Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="10" width="72" height="20" uuid="ed39691d-db30-4ab5-9db7-d2dc0f1d2b8f"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="10" width="100" height="20" uuid="850799a2-77dc-4aca-9dc0-4d225fdc14ac"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha De Horas Extars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="10" width="100" height="20" uuid="dbcc33bd-becf-4e82-920f-02fe9dda1ded"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="10" width="100" height="20" uuid="3bba680b-54c1-4c3b-be87-0a7849698d80"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="37" backcolor="#BB8B4B" uuid="117a4256-7ad7-4baa-9aa1-d46be0e64493"/>
+				<textField>
+					<reportElement x="691" y="10" width="100" height="20" uuid="fca35884-e073-4ca7-82fa-0ab179bc190e"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="578" y="10" width="100" height="20" uuid="7c7bca8f-1c6e-48c4-a20a-28165ec69691"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{horas_extras_valor_hora_extra}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="482" y="10" width="72" height="20" uuid="d7ffb775-36e7-4532-a52f-56db45f08b81"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{horas_extras_cant_horas}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="361" y="10" width="100" height="20" uuid="d1f94eb1-7184-4e21-b289-6e38aae9c499"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{horas_extras_fecha}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="124" y="10" width="100" height="20" uuid="2e592dd4-0608-486e-8f4c-3c0ff5077b42"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empleado_nombres}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="245" y="10" width="100" height="20" uuid="4af2098e-abbc-4e10-a29d-5e912f9c88b0"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empleado_apellidos}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="13" y="10" width="100" height="20" uuid="b4e0a8bf-afc7-40c6-b5ff-5e21de500d6e"/>
+					<textFieldExpression><![CDATA[$F{empleado_documento}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="526" y="7" width="233" height="20" uuid="d9571daf-cbc6-421f-aafe-4290c4055d1f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="759" y="7" width="40" height="20" uuid="90415f3c-7ba8-472c-9435-f1488d2401cf"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="58" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#95754B" uuid="c1c357e0-a8ee-4e7d-ae0c-7ab3c2a71744"/>
+			</line>
+			<staticText>
+				<reportElement x="302" y="14" width="276" height="20" forecolor="#999999" uuid="906b3c5a-31aa-459b-a2d5-d6e704228761"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Diseño De interior - 3124913575 / 3193045574]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="33" width="127" height="20" forecolor="#999999" uuid="86e6803e-841d-4965-ab0f-af1ea6cac843"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[dinterior496@gmail.com]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch"/>
+	</summary>
+</jasperReport>

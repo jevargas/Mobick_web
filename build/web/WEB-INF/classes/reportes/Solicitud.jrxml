@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f073f5a-fc87-4502-ab45-39cc1c0a5e43">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="12"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FAEBD7">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFE4BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="60de5dfc-471d-4093-9cdc-282cecbf6829"/>
+	<parameter name="idSolicitud" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     solicitudes.`Empleado_documento` AS solicitudes_Empleado_documento,
+     solicitudes.`fecha_solicitud` AS solicitudes_fecha_solicitud,
+     solicitudes.`fecha_entrega` AS solicitudes_fecha_entrega,
+     cliente.`documento` AS cliente_documento,
+     cliente.`nombres` AS cliente_nombres,
+     cliente.`apellidos` AS cliente_apellidos,
+     cliente.`domicilio` AS cliente_domicilio,
+     cliente.`telefono` AS cliente_telefono,
+     cliente.`correo` AS cliente_correo,
+     transportador.`nombres` AS transportador_nombres,
+     transportador.`apellidos` AS transportador_apellidos,
+     estado_solicitud.`detalles_estado` AS estado_solicitud_detalles_estado,
+     empleado.`nombres` AS empleado_nombres,
+     empleado.`apellidos` AS empleado_apellidos,
+     forma_de_pago.`descripcion_pago` AS forma_de_pago_descripcion_pago,
+     detalles_solicitud.`consecutivo` AS detalles_solicitud_consecutivo,
+     detalles_solicitud.`detalles_solicitud` AS detalles_solicitud_detalles_solicitud,
+     detalles_solicitud.`valor_detalle` AS detalles_solicitud_valor_detalle,
+     solicitudes.`idSolicitudes` AS solicitudes_idSolicitudes,
+     empleado.`documento` AS empleado_documento,
+     muebles.`tipo_mueble` AS muebles_tipo_mueble,
+     tipo_solicitud.`descripcion_solicitud` AS tipo_solicitud_descripcion_solicitud
+FROM
+     `cliente` cliente INNER JOIN `solicitudes` solicitudes ON cliente.`documento` = solicitudes.`Cliente_documento`
+     INNER JOIN `transportador` transportador ON solicitudes.`Transportador_documento` = transportador.`documento`
+     INNER JOIN `estado_solicitud` estado_solicitud ON solicitudes.`estado_solicitud_idestado_solicitud` = estado_solicitud.`idestado_solicitud`
+     INNER JOIN `empleado` empleado ON solicitudes.`Empleado_documento` = empleado.`documento`
+     INNER JOIN `forma_de_pago` forma_de_pago ON solicitudes.`Forma_de_pago_idForma_de_pago` = forma_de_pago.`idForma_de_pago`
+     INNER JOIN `detalles_solicitud` detalles_solicitud ON solicitudes.`idSolicitudes` = detalles_solicitud.`Solicitudes_idSolicitudes`
+     INNER JOIN `tipo_solicitud` tipo_solicitud ON solicitudes.`tipo_solicitud_idtipo_solicitud` = tipo_solicitud.`idtipo_solicitud`
+     INNER JOIN `muebles` muebles ON detalles_solicitud.`Muebles_idMuebles` = muebles.`idMuebles`
+
+where solicitudes.`idSolicitudes`=$P{idSolicitud} order by detalles_solicitud_consecutivo]]>
+	</queryString>
+	<field name="solicitudes_Empleado_documento" class="java.lang.Integer"/>
+	<field name="solicitudes_fecha_solicitud" class="java.sql.Date"/>
+	<field name="solicitudes_fecha_entrega" class="java.sql.Date"/>
+	<field name="cliente_documento" class="java.lang.Integer"/>
+	<field name="cliente_nombres" class="java.lang.String"/>
+	<field name="cliente_apellidos" class="java.lang.String"/>
+	<field name="cliente_domicilio" class="java.lang.String"/>
+	<field name="cliente_telefono" class="java.lang.String"/>
+	<field name="cliente_correo" class="java.lang.String"/>
+	<field name="transportador_nombres" class="java.lang.String"/>
+	<field name="transportador_apellidos" class="java.lang.String"/>
+	<field name="estado_solicitud_detalles_estado" class="java.lang.String"/>
+	<field name="empleado_nombres" class="java.lang.String"/>
+	<field name="empleado_apellidos" class="java.lang.String"/>
+	<field name="forma_de_pago_descripcion_pago" class="java.lang.String"/>
+	<field name="detalles_solicitud_consecutivo" class="java.lang.Integer"/>
+	<field name="detalles_solicitud_detalles_solicitud" class="java.lang.String"/>
+	<field name="detalles_solicitud_valor_detalle" class="java.lang.Integer"/>
+	<field name="solicitudes_idSolicitudes" class="java.lang.Integer"/>
+	<field name="empleado_documento" class="java.lang.Integer"/>
+	<field name="muebles_tipo_mueble" class="java.lang.String"/>
+	<field name="tipo_solicitud_descripcion_solicitud" class="java.lang.String"/>
+	<variable name="Total" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{detalles_solicitud_valor_detalle}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="155" splitType="Stretch">
+			<image>
+				<reportElement x="21" y="23" width="253" height="119" uuid="624b3c4b-5c44-4d74-bd2b-76744ff0c434"/>
+				<imageExpression><![CDATA["C:\\Users\\ew\\Documents\\NetBeansProjects\\aplicativo_mobick\\web\\resources\\img\\logoEmpresa.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="670" y="70" width="132" height="42" uuid="3b47c4f6-1976-4c0e-a297-6da7c87f8a25"/>
+				<textElement>
+					<font fontName="Arial Rounded MT Bold" size="24"/>
+				</textElement>
+				<text><![CDATA[Solicitud]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="694" y="122" width="108" height="20" uuid="6caa5e2d-1985-4305-a200-35e74e5b7a4d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="256" splitType="Stretch">
+			<textField>
+				<reportElement x="542" y="4" width="100" height="20" uuid="69ba9a8a-7e1a-4247-a47a-5d10752a051b"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{idSolicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="428" y="1" width="114" height="20" uuid="901c4a05-534f-421e-85c1-fcaf9413ca2e"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero de Solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="48" width="100" height="20" uuid="e0d4c55d-ce06-47b8-bcce-9f2fdc640080"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Entrega]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="461" y="48" width="100" height="20" uuid="83ff44cd-71fd-4ce2-be54-832eba9f3700"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitudes_fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="118" y="63" width="100" height="20" uuid="0d08904f-15ff-40fd-bd30-51b6c806ddc8"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos Del Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="83" width="100" height="20" uuid="fca98a06-623a-4d0c-8ef0-d387ef84f059"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Docuemento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="103" width="100" height="20" uuid="3ed730ed-fdea-423b-9958-ad88aaf474af"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="123" width="100" height="20" uuid="8694a21c-f306-493e-9f50-c574f6e59ffe"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="163" width="100" height="20" uuid="399faea7-eeb3-46d3-9a9a-3c1f8f3d5360"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="186" width="100" height="20" uuid="cfd27012-ccdc-41bd-966c-ec7e5c54038a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="103" width="100" height="20" uuid="193f803d-068c-4288-ac8c-314a755e6a33"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="83" width="100" height="20" uuid="ec345d13-2a44-4b95-b516-482a9eb13825"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_documento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="123" width="100" height="20" uuid="bf7a616e-7bd5-4e3f-9259-8dd6845450b9"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_apellidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="118" y="143" width="100" height="20" uuid="a4ec8ae7-fa93-482d-823e-c2660f5dc93b"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="163" width="100" height="20" uuid="ae7c2dae-1d3a-4291-b5ca-03fe186f2535"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="143" width="100" height="20" uuid="9045b22e-f283-455b-bcf9-ff618325c3b6"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_domicilio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="186" width="100" height="20" uuid="f0b7cc63-d41b-4057-83a1-c518cc790b33"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_correo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="96" width="100" height="20" uuid="54c24e12-ea73-40bd-aa3d-ec24c4e68327"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="461" y="96" width="93" height="20" uuid="5e8a480b-b9ec-43bf-8bfd-de2c5f01bb58"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="542" y="96" width="100" height="20" uuid="a3ad5b42-1325-41cf-bf3c-e328d350b938"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_apellidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="116" width="100" height="20" uuid="858402b4-d380-4ab0-b34e-75cb69949132"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forma De Pago]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="461" y="116" width="100" height="20" uuid="1f174755-8993-44f4-8bd9-3c7145a327ab"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{forma_de_pago_descripcion_pago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="137" width="100" height="20" uuid="9b35c2c0-6333-4f4c-891d-231291c448fe"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transportador]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="461" y="137" width="93" height="20" uuid="63cc44e1-d113-45b5-a424-729360a6f900"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transportador_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="542" y="136" width="100" height="20" uuid="3cda4e73-951e-44d3-b68b-fa097fb7ad4f"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transportador_apellidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="157" width="100" height="20" uuid="3a41c6c3-dfe2-4231-b1d6-b363363c634a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado De Solicitud]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="461" y="157" width="100" height="20" uuid="45d6abd9-3950-43f2-b4fe-04c7851f1345"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_solicitud_detalles_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="118" y="28" width="100" height="20" uuid="e05bf72a-f43d-4f06-8581-a1404d42eabe"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[tipo de solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="28" width="100" height="20" uuid="566ab047-3b6c-4a95-9cde-0202a93b264e"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Solicitud]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="28" width="100" height="20" uuid="b13e09f1-6907-448f-b2bd-50a6e3f5483d"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_solicitud_descripcion_solicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="28" width="100" height="20" uuid="e7bffe59-185d-4d9f-bff5-c7b5855f6a95"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitudes_fecha_solicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="510" y="232" width="100" height="20" uuid="74e0dde8-3ac2-44af-b492-b74203c5fa07"/>
+				<text><![CDATA[Valor Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="232" width="100" height="20" uuid="5c4b9a02-4a2c-4c67-846b-9a115acdca5f"/>
+				<text><![CDATA[Detalle de Mueble]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="232" width="100" height="20" uuid="98970630-b973-4e6a-aab3-72943015d037"/>
+				<text><![CDATA[Mueble]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="232" width="100" height="20" uuid="628e7b1b-29e1-4c88-9281-cd8f293bf726"/>
+				<text><![CDATA[Consecutivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="206" width="100" height="20" uuid="683a5730-172e-4892-a334-53ccfc1ecbb2"/>
+				<text><![CDATA[LISTA DE MUEBLES]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="139" y="12" width="100" height="20" uuid="b22f5b17-a49e-445e-827f-7e11febabdd7"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalles_solicitud_consecutivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="12" width="100" height="20" uuid="d774cc73-9ef1-4e84-892e-3f9830bf31d1"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{muebles_tipo_mueble}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="12" width="100" height="20" uuid="8a6fee1b-75c5-46ac-b90a-b41f40653e2d"/>
+				<textFieldExpression><![CDATA[$F{detalles_solicitud_detalles_solicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="12" width="100" height="20" uuid="70644422-9ead-4aed-8bb0-2c51940b7653"/>
+				<textFieldExpression><![CDATA[$F{detalles_solicitud_valor_detalle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="382" y="4" width="100" height="20" uuid="ac02c05c-dce6-44dd-a548-3c736d2763d3"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Total A Pagar]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="510" y="4" width="100" height="20" uuid="23b9c4b6-b57e-49b3-8371-63367f1d683e"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

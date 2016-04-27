@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioLoginViewDlg" widgetVar="UsuarioLoginViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewUsuarioLoginTitle}">
+            <h:form id="UsuarioLoginViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioLoginController.selected != null}">
+                        <h:outputText value="#{bundle.ViewUsuarioLoginLabel_usuario}"/>
+                        <h:outputText value="#{usuarioLoginController.selected.usuario}" title="#{bundle.ViewUsuarioLoginTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewUsuarioLoginLabel_contrasena}"/>
+                        <h:outputText value="#{usuarioLoginController.selected.contrasena}" title="#{bundle.ViewUsuarioLoginTitle_contrasena}"/>
+                        <h:outputText value="#{bundle.ViewUsuarioLoginLabel_empleadodocumento}"/>
+                        <h:outputText value="#{usuarioLoginController.selected.empleadodocumento}" title="#{bundle.ViewUsuarioLoginTitle_empleadodocumento}"/>
+                        <h:outputText value="#{bundle.ViewUsuarioLoginLabel_rolIdrol}"/>
+                        <h:outputText value="#{usuarioLoginController.selected.rolIdrol.tipoRol}" title="#{bundle.ViewUsuarioLoginTitle_rolIdrol}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UsuarioLoginViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

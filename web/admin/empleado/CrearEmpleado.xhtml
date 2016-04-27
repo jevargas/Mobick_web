@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{empleadoController.limpiarE()}"></f:event>
+        </f:metadata>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Nuevo Empleado
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 75%;"> 
+                    <i class="fa fa-list fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="Empleadoo?faces-redirect=true" value="Ver todos los empleados"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Nuevo empleado" style="color: #D9534F; font-size:25px; font-family:arial"/>
+                <hr/>
+                <h:form>
+                    <div style="margin-left:12% ">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Documento</label>
+                                <p:inputText type="number" style="width: 300px;" class="form-control" id="documento" value="#{empleadoController.selected.documento}" title="#{bundle.CreateEmpleadoTitle_documento}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_documento}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <p:inputText style="width: 300px;" class="form-control" id="nombres" value="#{empleadoController.selected.nombres}" title="#{bundle.CreateEmpleadoTitle_nombres}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_nombres}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <p:inputText style="width: 300px;" class="form-control" id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{bundle.CreateEmpleadoTitle_apellidos}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_apellidos}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <p:inputText type="number" style="width: 300px;" class="form-control" id="telefono" value="#{empleadoController.selected.telefono}" title="#{bundle.CreateEmpleadoTitle_telefono}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_telefono}"/>
+                            </div>   
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <p:inputText style="width: 300px;" class="form-control" id="direccion" value="#{empleadoController.selected.direccion}" title="#{bundle.CreateEmpleadoTitle_direccion}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_direccion}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>EPS</label>
+                                <p:inputText style="width: 300px;" class="form-control" id="eps" value="#{empleadoController.selected.eps}" title="#{bundle.CreateEmpleadoTitle_eps}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_eps}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <p:inputText style="width: 300px;" class="form-control" id="correo" value="#{empleadoController.selected.correo}" title="#{bundle.CreateEmpleadoTitle_correo}" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo</label>
+                                <h:selectOneMenu style="width: 300px;" class="form-control" id="cargoIdcargo" value="#{empleadoController.selected.cargoIdcargo}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_cargoIdcargo}">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione Cargo" itemValue="#{null}"/>
+                                    <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
+                                                   var="cargoIdcargoItem"
+                                                   itemValue="#{cargoIdcargoItem}" itemLabel="#{cargoIdcargoItem.nombreCargo}"/>
+                                </h:selectOneMenu>
+                                <br/>
+                                <br/>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <center>
+                        <div>
+                            <h:commandButton class="btn btn-success" value="Guardar Empleado" style="background-color: #D9534F; border: none;" type="submit" actionListener="#{empleadoController.create()}" action="#{empleadoController.limpiarE()}"/>
+                        </div>
+                    </center>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

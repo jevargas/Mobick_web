@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Empleados
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 83%;">
+                    <i class="fa fa-plus-circle fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="CrearEmpleado?faces-redirect=true" value="Nuevo Empleado"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Lista de empleados" style="color: #D9534F; font-size:25px; font-family:arial"/>
+                <h:form id="EmpleadoListForm" style="font-size: 12px;">
+                    <p:dataTable id="datalist" value="#{empleadoController.listar()}" emptyMessage="No se econtraron empleados"
+                                 var="item"
+                                 selectionMode="single" selection="#{empleadoController.selected}"
+                                 paginator="false"
+                                 rowKey="#{item.documento}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="empleadosTable"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton editButton deleteButton"/>
+                        <!--Global filter-->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('empleadosTable').filter()" style="width:150px" placeholder="Buscar..."/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <!--Global documento-->
+                        <p:column filterBy="#{item.documento}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_documento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.documento}"/>
+                        </p:column>
+                        <!--Global nombres-->
+                        <p:column filterBy="#{item.nombres}" filterMatchMode="contains">
+                            <f:facet name="header" >
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_nombres}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombres}"/>
+                        </p:column>
+                        <!--Global apellidos-->
+                        <p:column filterBy="#{item.apellidos}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_apellidos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellidos}"/>
+                        </p:column>
+                        <!--Global telefono-->
+                        <p:column filterBy="#{item.telefono}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_telefono}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <!--direccion-->
+                        <p:column filterBy="#{item.direccion}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_direccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <!--eps-->
+                        <p:column filterBy="#{item.eps}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_eps}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.eps}"/>
+                        </p:column>
+                        <!--correo-->
+                        <p:column filterBy="#{item.correo}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_correo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.correo}"/>
+                        </p:column>
+                        <!--cargo-->
+                        <p:column filterBy="#{item.cargoIdcargo}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpleadoTitle_cargoIdcargo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cargoIdcargo.nombreCargo}"/>
+                        </p:column>
+                        <!--footer-->
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":EmpleadoEditForm" oncomplete="PF('EmpleadoEditDialog').show()" disabled="#{empty empleadoController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{empleadoController.destroy()}" update=":growl,datalist" disabled="#{empty empleadoController.selected}">
+
+                                <p:confirm message="Èsta Seguro de eliminar el Empleado" header="Aviso" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                
+                    
+
+
+
+
+
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

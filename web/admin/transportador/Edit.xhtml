@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TransportadorEditDlg" showEffect="explode" hideEffect="bounce" widgetVar="TransportadorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTransportadorTitle}">
+            <h:form id="TransportadorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{transportadorController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTransportadorLabel_documento}" for="documento" />
+                        <p:inputText id="documento" value="#{transportadorController.selected.documento}" title="#{bundle.EditTransportadorTitle_documento}" required="true" requiredMessage="#{bundle.EditTransportadorRequiredMessage_documento}"/>
+                        <p:outputLabel value="#{bundle.EditTransportadorLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{transportadorController.selected.nombres}" title="#{bundle.EditTransportadorTitle_nombres}" required="true" requiredMessage="#{bundle.EditTransportadorRequiredMessage_nombres}"/>
+                        <p:outputLabel value="#{bundle.EditTransportadorLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{transportadorController.selected.apellidos}" title="#{bundle.EditTransportadorTitle_apellidos}" required="true" requiredMessage="#{bundle.EditTransportadorRequiredMessage_apellidos}"/>
+                        <p:outputLabel value="#{bundle.EditTransportadorLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{transportadorController.selected.telefono}" title="#{bundle.EditTransportadorTitle_telefono}" required="true" requiredMessage="#{bundle.EditTransportadorRequiredMessage_telefono}"/>
+                        <p:outputLabel value="#{bundle.EditTransportadorLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{transportadorController.selected.direccion}" title="#{bundle.EditTransportadorTitle_direccion}" required="true" requiredMessage="#{bundle.EditTransportadorRequiredMessage_direccion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{transportadorController.update}" value="#{bundle.Save}" update="display,:TransportadorListForm:datalist,:growl" oncomplete="PF('TransportadorEditDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TransportadorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

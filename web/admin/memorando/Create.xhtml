@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MemorandoCreateDlg" widgetVar="MemorandoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMemorandoTitle}">
+            <h:form id="MemorandoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{memorandoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMemorandoLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{memorandoController.selected.fecha}" title="#{bundle.EditMemorandoTitle_fecha}" required="true" requiredMessage="#{bundle.EditMemorandoRequiredMessage_fecha}" locale="es" mask="99/99/99" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateMemorandoLabel_observaciones}" for="observaciones" />
+                        <p:inputTextarea id="observaciones" value="#{memorandoController.selected.observaciones}" title="#{bundle.CreateMemorandoTitle_observaciones}" required="true" requiredMessage="#{bundle.CreateMemorandoRequiredMessage_observaciones}"/>
+                        <p:outputLabel value="#{bundle.CreateEmpleadoLabel_nombres}" for="empleadodocumento" />
+                        <p:selectOneMenu id="empleadodocumento" value="#{memorandoController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditMemorandoRequiredMessage_empleadodocumento}">
+                            <f:selectItems value="#{empleadoController.listar()}"
+                                           var="empleadodocumentoItem"
+                                           itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres} #{empleadodocumentoItem.apellidos}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{memorandoController.create}" value="#{bundle.Save}" update="display,:MemorandoListForm:datalist,:growl" oncomplete="PF('MemorandoCreateDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MemorandoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

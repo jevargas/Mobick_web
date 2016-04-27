@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{clienteController.limpiarC()}"></f:event>
+        </f:metadata>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Nuevo Cliente
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 75%;"> 
+                    <i class="fa fa-list fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="Cliente?faces-redirect=true" value="Ver todos los clientes"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Crear cliente" style="color: #D9534F; font-size:25px; font-family:arial"/>
+                <hr/>
+                <h:form>
+                    <div style="margin-left:12%; ">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Documento</label>
+                                <p:inputText type="number" class="form-control" style="width: 300px;" id="documento" value="#{clienteController.selected.documento}" title="#{bundle.CreateClienteTitle_documento}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_documento}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <h:inputText style="width: 300px;" class="form-control" id="nombres" value="#{clienteController.selected.nombres}" title="#{bundle.CreateClienteTitle_nombres}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_nombres}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <h:inputText style="width: 300px;" class="form-control" id="apellidos" value="#{clienteController.selected.apellidos}" title="#{bundle.CreateClienteTitle_apellidos}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_apellidos}" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Direccion</label>
+                                <h:inputText style="width: 300px;" class="form-control" id="domicilio" value="#{clienteController.selected.domicilio}"   title="#{bundle.CreateClienteTitle_domicilio}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_domicilio}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                <p:inputText type="number" style="width: 300px;" class="form-control" id="telefono" value="#{clienteController.selected.telefono}"  title="#{bundle.CreateClienteTitle_telefono}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_telefono}"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <h:inputText style="width: 300px;" class="form-control" id="correo" value="#{clienteController.selected.correo}" title="#{bundle.CreateClienteTitle_correo}" /><br/><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <center><h:commandButton class="btn btn-success" style="background-color:#D9534F; border: none; " value="Guardar Cliente" type="submit" actionListener="#{clienteController.create}" action="#{clienteController.limpiarC()}"/></center>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

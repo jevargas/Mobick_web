@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallesSolicitudCreateDlg" widgetVar="DetallesSolicitudCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDetallesSolicitudTitle}">
+            <h:form id="DetallesSolicitudCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detallesSolicitudController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_consecutivo}" for="consecutivo" />
+                        <p:inputText id="consecutivo" value="#{detallesSolicitudController.selected.consecutivo}" title="#{bundle.CreateDetallesSolicitudTitle_consecutivo}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_consecutivo}"/>
+                        <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_detallesSolicitud}" for="detallesSolicitud" />
+                        <p:inputText id="detallesSolicitud" value="#{detallesSolicitudController.selected.detallesSolicitud}" title="#{bundle.CreateDetallesSolicitudTitle_detallesSolicitud}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_detallesSolicitud}"/>
+                        <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_valorDetalle}" for="valorDetalle" />
+                        <p:inputText id="valorDetalle" value="#{detallesSolicitudController.selected.valorDetalle}" title="#{bundle.CreateDetallesSolicitudTitle_valorDetalle}" required="true" requiredMessage="#{bundle.CreateDetallesSolicitudRequiredMessage_valorDetalle}"/>
+                        <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_solicitudesidSolicitudes}" for="solicitudesidSolicitudes" />
+                        <p:selectOneMenu id="solicitudesidSolicitudes" value="#{detallesSolicitudController.selected.solicitudesidSolicitudes}" required="true" requiredMessage="#{bundle.EditDetallesSolicitudRequiredMessage_solicitudesidSolicitudes}">
+                            <f:selectItems value="#{solicitudesController.itemsAvailableSelectOne}"
+                                           var="solicitudesidSolicitudesItem"
+                                           itemValue="#{solicitudesidSolicitudesItem}" itemLabel="#{solicitudesidSolicitudesItem.idSolicitudes}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDetallesSolicitudLabel_mueblesidMuebles}" for="mueblesidMuebles" />
+                        <p:selectOneMenu id="mueblesidMuebles" value="#{detallesSolicitudController.selected.mueblesidMuebles}" required="true" requiredMessage="#{bundle.EditDetallesSolicitudRequiredMessage_mueblesidMuebles}">
+                            <f:selectItems value="#{mueblesController.itemsAvailableSelectOne}"
+                                           var="mueblesidMueblesItem"
+                                           itemValue="#{mueblesidMueblesItem}" itemLabel="#{mueblesidMueblesItem.tipoMueble}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detallesSolicitudController.create}" value="#{bundle.Save}" update="display,:DetallesSolicitudListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetallesSolicitudCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DetallesSolicitudCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

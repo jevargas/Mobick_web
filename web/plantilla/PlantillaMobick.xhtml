@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        
+        <style>
+            ul li ul {
+                /* Resto de estilos... */
+                display: none;
+            }
+        </style>
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- BOOTSTRAP STYLES-->
+        <h:outputStylesheet name="./css/bootstrap.css"/>
+        <!-- FONTAWESOME STYLES-->
+        <h:outputStylesheet name="./css/font-awesome.css"/>
+        <!-- MORRIS CHART STYLES-->
+        <h:outputStylesheet name="./css/morris-0.4.3.min.css"/>
+        <!-- CUSTOM STYLES-->
+        <h:outputStylesheet name="./css/custom.css"/>
+        <!-- GOOGLE FONTS-->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+        <link  rel="shortcut icon" href="../resources/img/logotipo.PNG" />
+        <h:outputScript library="js" name="spanishLocale.js" />
+        
+        <title><ui:insert name="titulo">Plantilla</ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" autoUpdate="true" life="3000"/>
+        <div id="wrapper">
+
+            <!--Nav TOP-->
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <ui:insert name="top">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" style="padding: 10px; margin:auto;  "><h:graphicImage value="/resources/img/logoSinFondon.png" width="200" height="55" alt="logo" class="logo-default"  /></a> 
+                        <h:graphicImage value="/resources/img/esquina.png" style="width:36.8px; "/>
+
+                    </div>
+                    <div style="color: white;
+                         padding: 15px 50px 5px 50px;
+                         float: right;
+                         "><h:form><p:commandLink style="border-radius:6px;" actionListener="#{usuarioLoginController.cerrarSesion()}" action="/faces/login.xhtml?faces-redirect=true" value="Cerrar Sesion" class="btn btn-danger square-btn-adjust"></p:commandLink>
+                         
+                        </h:form>  </div>
+                </ui:insert>
+            </nav>
+            <!-- /. NAV TOP  -->
+
+            <!--Left-->
+            <nav class="navbar-default navbar-side" role="navigation">
+                <ui:insert name="left">
+                    <h:form style="background-color:#353f40">
+                        <div class="sidebar-collapse"  >
+                            <ul class="nav" id="main-menu">
+                                <li class="text-center">
+                                    <a><h:graphicImage value="/resources/img/user-admin.png" class="user-image img-responsive" >
+                                            <h:outputText style="color: #fff ; font-size:25px; " value="#{usuarioLoginController.logeo.rolIdrol.tipoRol}"/>
+                                        </h:graphicImage>
+                                        <h:outputText style="color: #fff; font-size:25px;" value="#{usuarioLoginController.logeo.usuario}" /> 
+                                        <br/>
+                                    </a>
+
+                                </li>
+
+                                <li style="background-color:#D9534F">
+                                    <i class="fa fa-home fa-3x" style="color: #fff; margin-left:10px; ">
+                                        <h:commandLink style="font-family: sans-serif; color: #fff; font-size:16px; margin-left:10px;" action="/faces/index.xhtml?faces-redirect=true" value="Inicio"> </h:commandLink></i>
+                                </li>   
+                                <li >
+                                    <a href="#"><i class="fa fa-file-text fa-3x"></i><h:outputText value="Solicitudes" style="margin-left: 15px;"/> <span class="fa arrow"></span>
+                                    </a>
+
+
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/solicitudes/Solicitud.xhtml?faces-redirect=true" value="Ver Solicitudes"/>
+                                        </li>
+                                        <li><h:commandLink action="/faces/admin/solicitudes/CrearSolicitud.xhtml?faces-redirect=true" actionListener="#{detallesSolicitudController.prepareCreate()}" value="Nueva Solicitud"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-maxcdn fa-3x" ></i><h:outputText value="Muebles" style="margin-left:10px;"/><span class="fa arrow"></span>
+                                    </a>
+
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/muebles/Mueblee.xhtml?faces-redirect=true" value="Ver Muebles"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/muebles/CrearMueble.xhtml?faces-redirect=true" value="Nuevo Mueble"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-users fa-3x"></i><h:outputText value="Clientes" style="margin-left:9px;"/><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/cliente/Cliente.xhtml?faces-redirect=true" value="Ver Clientes"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/cliente/CrearCliente.xhtml?faces-redirect=true" value="Nuevo Cliente"/>
+                                        </li>
+                                    </ul>
+                                </li>  
+                                <li>
+                                    <a href="#"><i class="fa fa-child fa-3x" style="margin-left: 7px;"></i><h:outputText value="Control Personal" style="margin-left:13px;"/><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/empleado/Empleadoo.xhtml?faces-redirect=true" value="Ver Empleados"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/transportador/Transportadorr.xhtml?faces-redirect=true" value="Ver Transportadores"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/empleado/CrearEmpleado.xhtml?faces-redirect=true" value="Nuevo Empleados"/>
+                                        </li>
+
+                                        <li>
+                                            <h:commandLink action="/faces/admin/transportador/CrearTransportador.xhtml?faces-redirect=true" value="Nuevo Transportadores"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-sitemap fa-3x" style="margin-left:3px;" ></i><h:outputText style="margin-left: 8px;" value="Gestionar Personal" /><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/horasExtras/HorasExtrass.xhtml?faces-redirect=true" value="Horas Extras"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/prestamos/Prestamoss.xhtml?faces-redirect=true" value="Prestamos a Empleados"/>
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/memorando/Memorandoss.xhtml?faces-redirect=true" value="Memorandos"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!--Gestion de cuentas-->
+                                <li>
+                                    <h:link rendered="#{usuarioLoginController.logeo!=null and usuarioLoginController.logeo.rolIdrol.idrol eq 1}"><i class="fa fa-arrow-circle-right fa-3x" style="margin-left: 4px;"></i><h:outputText value="Gestion de Cuentas " style="margin-left:15px; "/><span class="fa arrow"></span></h:link>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <h:commandLink action="/faces/admin/usuarioLogin/UsuarioLoginn.xhtml?faces-redirect=true" value="Ver Cuentas" />
+                                        </li>
+                                        <li>
+                                            <h:commandLink action="/faces/admin/usuarioLogin/CrearUsuario.xhtml?faces-redirect=true" actionListener="#{usuarioLoginController.prepareCreate()}" value="Nueva Cuenta" />
+                                        </li>
+                                    </ul>
+                                </li> 
+                                <!--Reportes-->
+                                <li>
+                                    <i class="fa fa-file-pdf-o fa-3x" style="color: white; margin-left:17px;"><!--</i><h:commandLink action="/faces/admin/Reportes/reportes.xhtml?faces-redirect=true" value="Reportes " /><span class="fa arrow"></span>-->
+                                    <h:commandLink style="font-family: arial; color: #fff; font-size:14px; margin-left:22px;" action="/faces/admin/Reportes/reportes.xhtml?faces-redirect=true" value="Reportes"> </h:commandLink></i>
+
+                                </li> 
+                            </ul> 
+                        </div>
+                    </h:form>
+                </ui:insert>
+            </nav>
+            <!-- /. Left-->
+
+            <!--Contenido-->
+            <div id="page-wrapper" >
+                <!-- Pagina inner -->
+                <div id="page-inner">
+                    <ui:insert name="content">
+                       
+                    </ui:insert>
+                </div>
+                <!-- /. PAGE INNER  -->
+            </div>
+            <!-- /. PAGE WRAPPER  -->
+        </div>
+        <!--/ID: WRAPPER-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Muestra y oculta los menús
+                $('ul li:has(ul)').click(function (e) {
+                    e.preventDefault();
+                    if ($(this).hasClass('activado')) {
+                        $(this).removeClass('activado');
+                        $(this).children('ul').slideUp();
+                    } else {
+                        $('ul li ul').slideUp();
+                        $('ul li').removeClass('activado');
+                        $(this).addClass('activado');
+                        $(this).children('ul').slideDown();
+                    }
+                });
+            });
+        </script>
+        <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+        <!-- JQUERY SCRIPTS 
+        <h:outputScript library="js" name="jquery-1.10.2.js" />-->
+        <!-- BOOTSTRAP SCRIPTS -->
+        <h:outputScript library="js" name="bootstrap.min.js" />
+        <!-- METISMENU SCRIPTS -->
+        <h:outputScript library="js" name="jquery.metisMenu.js" />
+        <!--MORRIS CHART SCRIPTS -->
+        <h:outputScript library="js" name="morris/raphael-2.1.0.min.js" />
+        <h:outputScript library="js" name="morris/morris.js" />
+        <!--CUSTOM SCRIPTS
+        <h:outputScript library="js" name="custom.js" />-->
+
+    </h:body>
+
+
+</html>

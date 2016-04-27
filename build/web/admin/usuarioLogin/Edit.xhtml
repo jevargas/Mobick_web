@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioLoginEditDlg" showEffect="explode" hideEffect="bounce" widgetVar="UsuarioLoginEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuarioLoginTitle}">
+            <h:form id="UsuarioLoginEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioLoginController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUsuarioLoginLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{usuarioLoginController.selected.usuario}" title="#{bundle.EditUsuarioLoginTitle_usuario}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_usuario}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLoginLabel_contrasena}" for="contrasena" />
+                        <p:inputText id="contrasena" value="#{usuarioLoginController.contrasena}" title="#{bundle.EditUsuarioLoginTitle_contrasena}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_contrasena}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLoginLabel_empleadodocumento}" for="empleadodocumento" />
+                        <p:selectOneMenu id="empleadodocumento" value="#{usuarioLoginController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_empleadodocumento}">
+                            <f:selectItems value="#{empleadoController.listar()}"
+                                           var="empleadodocumentoItem"
+                                           itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditUsuarioLoginLabel_rolIdrol}" for="rolIdrol" />
+                        <p:selectOneMenu id="rolIdrol" value="#{usuarioLoginController.selected.rolIdrol}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_rolIdrol}">
+                            <f:selectItems value="#{rolController.itemsAvailableSelectOne}"
+                                           var="rolIdrolItem"
+                                           itemValue="#{rolIdrolItem}" itemLabel="#{rolIdrolItem.tipoRol}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioLoginController.update}" value="#{bundle.Save}" update="display,:UsuarioLoginListForm:datalist,:growl" oncomplete="PF('UsuarioLoginEditDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioLoginEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

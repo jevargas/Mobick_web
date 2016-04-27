@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="content">
+                <h2 style="padding: 20px; ">Reportes</h2>
+                  <hr></hr>
+                  
+               
+                
+            
+                
+               <h2 style="padding: 20px; ">Control Personal </h2>
+                <div>
+                   
+                    <div class="row col-md-6" >
+                        <h:form id="formulario3" >
+                                           <center>
+                                               <table>
+                                               <h2>reporte de horas extras</h2>
+                                               <tr>
+                                                   <td><p:outputLabel  style="padding: 6px; " value="documento Empleado"/> </td>  
+                                               </tr>
+                                               <tr>
+                                                   <td><p:inputText id="nombreReporte" style="padding: 5px; " value="#{horasExtrasController.docuemento}" /></td>
+                                               </tr>
+                                               </table>
+                                               <br></br><h:commandButton id="ReporteEmpleado" style="background-color: #D9534F; border: none;" class="btn btn-primary" value="Reporte Horas Extras"   actionListener="#{horasExtrasController.ReporteHorasExtras()}"/>
+                                           </center>
+                        </h:form>
+                        <br></br><br></br>
+                        <hr></hr>
+                        <br></br><br></br>
+                </div >
+                
+                    <div class="row col-md-6">
+                
+                        <h:form id="formulario4" >
+                                            <center>
+                                                <table>
+                                                <h2>reporte de prestamos</h2>
+                                                <tr>
+                                                    <td><p:outputLabel  style="padding: 6px; " value="Documento Empelado " /></td> 
+                                                </tr>
+                                                <tr>
+                                                    <td><p:inputText id="nombreReporte" style="padding: 5px; " value="#{prestamosController.documentoPres}" /></td>
+                                                </tr>
+
+                                                </table>
+                                                <br></br> <h:commandButton id="ReporteEmpleado" style="background-color: #D9534F; border: none;" class="btn btn-primary" value="Reporte Prestamo"   actionListener="#{prestamosController.ReportePrestamos()}"/>
+                                            </center>
+                        </h:form>
+                        <br></br><br></br>
+                        <hr></hr>
+                        <br></br><br></br>
+                    </div>
+
+                </div>
+                <div>
+                   
+                    <div class="row col-md-6">
+                           <h:form id="formulario" >
+                                              <center>
+                                                  <table >
+                                                      <h2>ventas</h2>
+                                                   <tr>
+                                                       <center><td style="padding: 6px; "> <p:outputLabel value="Fecha inicio" /> </td></center>                                       
+                                                       <center><td style="padding: 6px; "> <p:outputLabel value="Fecha fin" /></td></center>
+                                                   </tr>
+
+                                                   <tr>
+                                                       <center><td style="padding: 5px; "><p:calendar id="fechaReporte" pattern="MM/dd/yyyy" locale="es" maxdate="#{solicitudesController.fechaVentas}" value="#{solicitudesController.fechaVentas}"/></td></center>
+                                                       <center><td style="padding: 5px; "><p:calendar id="fechaeReporte" pattern="MM/dd/yyyy" locale="es" maxdate="#{solicitudesController.fechaVentaFin}" value="#{solicitudesController.fechaVentaFin}"/></td>  </center>
+                                                   </tr>  
+
+                                                  </table>
+                                                  <br></br><h:commandButton id="ReporteEmpleado" style="background-color: #D9534F; border: none;" class="btn btn-primary" value="Reporte Venta"   actionListener="#{solicitudesController.ReporteVentas()}"/>
+
+                                              </center>
+                           </h:form> 
+                       
+                     
+                       
+                    </div>
+                     <div class="row col-md-6">
+                       
+                         <h:form id="formulario2" >
+                                       <center>
+                                           <table>
+                                           <h2 style="padding: 6px; ">Muebles</h2>
+
+                                           </table>
+                                           <br></br><h:commandButton id="ReporteEmpleado" style="background-color: #D9534F; border: none;" class="btn btn-primary"  value="Generar reporte de muebles"   actionListener="#{mueblesController.ReporteMuebles()}"/>
+
+                                       </center>
+                    </h:form>
+                     
+                    </div>
+                
+                </div>
+             
+                <div>
+                    
+                   
+                </div>
+                     
+                  
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

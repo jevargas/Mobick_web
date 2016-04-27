@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioLoginController.validarSesion()}"></f:event>
+            <f:event type="preRenderView" listener="#{solicitudesController.calcularPendientes()}"></f:event>
+            <f:event type="preRenderView" listener="#{clienteController.calcularActivos()}"></f:event>
+            <f:event type="preRenderView" listener="#{empleadoController.calcularActivos()}"></f:event>
+            <f:event type="preRenderView" listener="#{mueblesController.calcularActivos()}"></f:event>
+            <f:event type="preRenderView" listener="#{horasExtrasController.calcularPendientes()}"></f:event>
+            <f:event type="preRenderView" listener="#{prestamosController.calcularPendientes()}"></f:event>
+        </f:metadata>
+    </head>
+    <body>
+
+        <ui:composition template="./plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Index
+            </ui:define>
+            <ui:define name="content">
+                <!--Row-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <center><h3>Bienvenido , Es un gusto tenerte de vuelta. </h3></center>
+                    </div>
+                </div>              
+                <!-- /. ROW  -->
+
+                <hr />
+                <!--CONTENEDOR-->
+                <div class="col-md-12" style="margin-left: 12%;">
+                    <!--ROW-->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-red set-icon">
+                                    <i class="fa fa-bell-o"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{solicitudesController.cantPendientes}</p>
+                                    <p class="text-muted">Solicitudes Pendientes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-green set-icon">
+                                    <i class="fa fa-money"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{prestamosController.pendientesXcobrar}</p>
+                                    <p class="text-muted">Avances por cobrar</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-brown set-icon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{clienteController.clientesActivos}</p>
+                                    <p class="text-muted">Clientes Activos</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <!-- /. ROW  -->
+                    <!--ROW-->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-brown set-icon">
+                                    <i class="fa fa-maxcdn"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{mueblesController.mueblesActivos}</p>
+                                    <p class="text-muted">Muebles Existentes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-brown set-icon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{horasExtrasController.pendientes}</p>
+                                    <p class="text-muted">Horas por cancelar</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-6">           
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box bg-color-brown set-icon">
+                                    <i class="fa fa-child"></i>
+                                </span>
+                                <div class="text-box" >
+                                    <p class="main-text">#{empleadoController.empleadosActivos}</p>
+                                    <p class="text-muted">Empleados Activos</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

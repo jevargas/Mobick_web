@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Transportadores
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 80%;">
+                    <i class="fa fa-plus-circle fa-2x" style="color: #D9534F;">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="CrearTransportador?faces-redirect=true" value="Nuevo Transportador"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Lista de transportadores" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <h:form id="TransportadorListForm" style="font-size: 12px;">
+                    <p:dataTable id="datalist" value="#{transportadorController.items}" emptyMessage="No se econtraron transportadores"
+                                 var="item"
+                                 selectionMode="single" selection="#{transportadorController.selected}"
+                                 paginator="false"
+                                 rowKey="#{item.documento}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="transportardoresTable"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton editButton deleteButton"/>
+                        <!--Global filter-->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar en todos los campos :" />
+                                <p:inputText id="globalFilter" onkeyup="PF('transportardoresTable').filter()" style="width:150px" placeholder="Buscar..."/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <!--documento-->
+                        <p:column filterBy="#{item.documento}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportadorTitle_documento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.documento}"/>
+                        </p:column>
+                        <!--nombres-->
+                        <p:column filterBy="#{item.nombres}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportadorTitle_nombres}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombres}"/>
+                        </p:column>
+                        <!--apellidos-->
+                        <p:column filterBy="#{item.apellidos}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportadorTitle_apellidos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellidos}"/>
+                        </p:column>
+                        <!--telefono-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportadorTitle_telefono}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <!--direccion-->
+                        <p:column filterBy="#{item.direccion}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportadorTitle_direccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <!--footer-->
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TransportadorViewForm" oncomplete="PF('TransportadorViewDialog').show()" disabled="#{empty transportadorController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TransportadorEditForm" oncomplete="PF('TransportadorEditDialog').show()" disabled="#{empty transportadorController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{transportadorController.destroy}" update=":growl,datalist" disabled="#{empty transportadorController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

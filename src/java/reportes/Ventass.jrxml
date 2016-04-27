@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="904b46dd-71e6-4e20-971a-bfd990e3e84a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaVenta" class="java.lang.String"/>
+	<parameter name="fechaVentaFin" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     detalles_solicitud.`valor_detalle` AS detalles_solicitud_valor_detalle,
+     detalles_solicitud.`detalles_solicitud` AS detalles_solicitud_detalles_solicitud,
+     solicitudes.`fecha_solicitud` AS solicitudes_fecha_solicitud,
+     solicitudes.`fecha_entrega` AS solicitudes_fecha_entrega,
+     solicitudes.`tipo_solicitud_idtipo_solicitud` AS solicitudes_tipo_solicitud_idtipo_solicitud,
+     cliente.`nombres` AS cliente_nombres,
+     cliente.`apellidos` AS cliente_apellidos,
+     solicitudes.`idSolicitudes` AS solicitudes_idSolicitudes
+FROM
+     `detalles_solicitud` detalles_solicitud INNER JOIN `solicitudes` solicitudes ON detalles_solicitud.`Solicitudes_idSolicitudes` = solicitudes.`idSolicitudes`
+     INNER JOIN `cliente` cliente ON solicitudes.`Cliente_documento` = cliente.`documento`
+WHERE
+     solicitudes.`eliminar` = 0
+     and solicitudes.`tipo_solicitud_idtipo_solicitud` = 2
+     and solicitudes.`fecha_solicitud` BETWEEN $P{fechaVenta} AND $P{fechaVentaFin}]]>
+	</queryString>
+	<field name="detalles_solicitud_valor_detalle" class="java.lang.Integer"/>
+	<field name="detalles_solicitud_detalles_solicitud" class="java.lang.String"/>
+	<field name="solicitudes_fecha_solicitud" class="java.sql.Date"/>
+	<field name="solicitudes_fecha_entrega" class="java.sql.Date"/>
+	<field name="solicitudes_tipo_solicitud_idtipo_solicitud" class="java.lang.Integer"/>
+	<field name="cliente_nombres" class="java.lang.String"/>
+	<field name="cliente_apellidos" class="java.lang.String"/>
+	<field name="solicitudes_idSolicitudes" class="java.lang.Integer"/>
+	<variable name="TOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{detalles_solicitud_valor_detalle}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="30" y="8" width="253" height="119" uuid="3abf6239-c1e3-4902-9c47-93de7b18ad43"/>
+				<imageExpression><![CDATA["C:\\Users\\ew\\Documents\\NetBeansProjects\\aplicativo_mobick\\web\\resources\\img\\logoEmpresa.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="590" y="47" width="212" height="35" uuid="4238b4cc-c799-43c7-817b-d173803e8a8d"/>
+				<textElement>
+					<font fontName="Arial Rounded MT Bold" size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte Ventas]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="694" y="82" width="108" height="20" uuid="66079fe4-8c43-4621-84e8-dce06e1c5a35"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="216" y="0" width="162" height="20" uuid="8d0cc2b5-f966-4c25-9fcf-e84c4007405b"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA['Fecha Inicio: '+$P{fechaVenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="0" width="155" height="20" uuid="2e396ddb-f419-4475-a8fc-edebf8032d35"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA['fecha Fin: '+$P{fechaVentaFin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="42" backcolor="#CEB593" uuid="c8209d86-3ad7-4a14-9775-3f93f8464fbe"/>
+				<staticText>
+					<reportElement x="685" y="10" width="100" height="20" uuid="c280ea6a-4a2d-4705-8db9-2fc37aa9bc1b"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor Detalle]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="566" y="10" width="100" height="20" uuid="49da1248-2228-4845-8484-814482608a05"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Detalle Solicitud]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="442" y="10" width="100" height="20" uuid="7f45cc46-9f2c-4298-a8d7-76889da3ae57"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Apellidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="10" width="84" height="20" uuid="3d379177-18a0-4db5-a45c-ddb1077aae16"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Numero Solicitud]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="116" y="10" width="101" height="20" uuid="e4e5df45-1d7a-4626-ac7e-7eb9211cfbcb"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha  De Solicitud]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="231" y="10" width="100" height="20" uuid="bb3d8ce4-6179-4868-8f8b-ca902d021256"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha De  Entrega]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="342" y="10" width="100" height="20" uuid="6c722752-82a4-4275-a9a0-5fa078f43d66"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombres]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="43" backcolor="#BB8B4B" uuid="e24f829e-6c7d-4fb1-8137-8cd170d3d7e0"/>
+				<textField>
+					<reportElement x="117" y="14" width="101" height="20" uuid="db717267-c806-43d7-b81c-1e9ba4239c6c"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{solicitudes_fecha_solicitud}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="232" y="14" width="100" height="20" uuid="6589d6eb-12b2-4b29-b714-106c9e3d42a3"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{solicitudes_fecha_entrega}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="343" y="14" width="100" height="20" uuid="dae6b11e-e6e0-4fbe-9a83-da71e8a39f81"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cliente_nombres}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="443" y="14" width="100" height="20" uuid="3a22658e-abd5-473a-8d22-55752046affe"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cliente_apellidos}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="567" y="14" width="100" height="20" uuid="5d160a05-4ac6-4798-894f-4e8909d876ae"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detalles_solicitud_detalles_solicitud}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="686" y="14" width="100" height="20" uuid="216e34eb-3083-4a60-89e4-d2727feb52e5"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{detalles_solicitud_valor_detalle}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="12" y="14" width="84" height="20" uuid="0afcec78-fd36-41e8-b2ca-e139f1917686"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{solicitudes_idSolicitudes}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="544" y="10" width="205" height="20" uuid="c7d8c9c9-5c6f-4436-96d0-b5b6d7309383"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="749" y="10" width="40" height="20" uuid="0f45fc54-8e6e-481b-b6bb-eb9e2912d68e"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#CEB593" uuid="6b7b6ee0-5d7a-4c53-ac90-fcd2bc50303e"/>
+			</line>
+			<staticText>
+				<reportElement x="268" y="14" width="276" height="20" forecolor="#999999" uuid="c2c01097-4ba1-4da9-9809-42b942a42f48"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Diseño De interior - 3124913575 / 3193045574]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="33" width="127" height="20" forecolor="#999999" uuid="d6d49aca-d579-43f6-a372-70bbcbca5bdb"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[dinterior496@gmail.com]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="35" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="544" y="0" width="259" height="30" backcolor="#BB8B4B" uuid="6a965de3-7b02-4a54-b72e-e6c3abc9bf5b"/>
+				<textField>
+					<reportElement x="145" y="7" width="100" height="20" uuid="e114affd-53a5-4372-886c-dc9f5d6c6f08"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="7" width="111" height="20" uuid="c7d5c3e1-9daa-43cd-bfd4-255f743ae73e"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[total ventas]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

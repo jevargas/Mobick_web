@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoEditDlg" showEffect="explode" hideEffect="bounce" widgetVar="EmpleadoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEmpleadoTitle}">
+            <h:form id="EmpleadoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empleadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_documento}" for="documento" />
+                        <p:inputText id="documento" value="#{empleadoController.selected.documento}" title="#{bundle.EditEmpleadoTitle_documento}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_documento}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{bundle.EditEmpleadoTitle_nombres}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_nombres}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{bundle.EditEmpleadoTitle_apellidos}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_apellidos}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{empleadoController.selected.telefono}" title="#{bundle.EditEmpleadoTitle_telefono}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_telefono}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{empleadoController.selected.direccion}" title="#{bundle.EditEmpleadoTitle_direccion}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_eps}" for="eps" />
+                        <p:inputText id="eps" value="#{empleadoController.selected.eps}" title="#{bundle.EditEmpleadoTitle_eps}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_eps}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_correoIdcorreo}" for="cargoIdcargo" />
+                        <p:inputText id="corre" value="#{empleadoController.selected.correo}" title="#{bundle.EditEmpleadoTitle_correo}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_correo}"/>
+                        <p:outputLabel value="#{bundle.EditEmpleadoLabel_cargoIdcargo}" for="cargoIdcargo" />
+                        <p:selectOneMenu style="padding: 0; width: 180px;" id="cargoIdcargo" value="#{empleadoController.selected.cargoIdcargo}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_cargoIdcargo}">
+                            <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
+                                           var="cargoIdcargoItem"
+                                           itemValue="#{cargoIdcargoItem}" itemLabel="#{cargoIdcargoItem.nombreCargo}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleadoController.update}" value="#{bundle.Save}" update="display,:EmpleadoListForm:datalist,:growl" oncomplete="PF('EmpleadoEditDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmpleadoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

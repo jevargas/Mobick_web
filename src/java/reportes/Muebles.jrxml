@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5eaee97f-ff38-4a77-8036-5e74bdc8bfeb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     muebles.`tipo_mueble` AS muebles_tipo_mueble,
+     muebles.`detalles_mueble` AS muebles_detalles_mueble
+FROM
+     `muebles` muebles]]>
+	</queryString>
+	<field name="muebles_tipo_mueble" class="java.lang.String"/>
+	<field name="muebles_detalles_mueble" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="134" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="9" width="253" height="119" uuid="853f0c30-7f1c-4522-adbf-e4249d1a577e"/>
+				<imageExpression><![CDATA["C:\\Users\\ew\\Documents\\NetBeansProjects\\aplicativo_mobick\\web\\resources\\img\\logoEmpresa.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="344" y="59" width="211" height="33" uuid="e5981f38-ecc4-4c3f-93d3-6f668d04ac06"/>
+				<textElement>
+					<font fontName="Arial Rounded MT Bold" size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte Muebles]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="447" y="92" width="108" height="20" uuid="4fda233e-77f8-45ae-a55d-0f1ea2a36cb7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="41" backcolor="#CEB593" uuid="e1f072fb-fe11-4340-8321-ceee9125ecb0"/>
+				<staticText>
+					<reportElement x="119" y="14" width="127" height="20" uuid="a4ed61a5-7d8b-4c6d-a171-fed43fee2b82"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo De Mueble]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="303" y="14" width="144" height="20" uuid="850c991f-4995-407c-8e50-57f57d6acfb2"/>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Detalle Del Mueble]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="8" width="555" height="35" backcolor="#BB8B4B" uuid="f611355e-4a8f-4f05-b943-0274e651d217"/>
+				<textField>
+					<reportElement x="303" y="9" width="144" height="20" uuid="b753cb71-9ae3-48c7-a222-9642e4f30a9b"/>
+					<textFieldExpression><![CDATA[$F{muebles_detalles_mueble}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="119" y="9" width="127" height="20" uuid="9fe4bb3f-8d47-4a8d-b352-ce13c487f5a9"/>
+					<textFieldExpression><![CDATA[$F{muebles_tipo_mueble}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="328" y="2" width="188" height="20" uuid="a746423c-22f1-4211-ab03-1bf59c5d2127"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="2" width="40" height="20" uuid="812ec114-cd46-42bf-ba71-a4631e4aaa6d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="59" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="b7d12c8f-1f56-477d-b43b-a31faa048791"/>
+			</line>
+			<staticText>
+				<reportElement x="146" y="12" width="276" height="20" forecolor="#999999" uuid="a139bbe0-31f7-4a4b-8318-3e05d7c0e445"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Diseño De interior - 3124913575 / 3193045574]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="31" width="127" height="20" forecolor="#999999" uuid="ed00c5d2-561f-469a-bf6e-845f81043eec"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[dinterior496@gmail.com]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>

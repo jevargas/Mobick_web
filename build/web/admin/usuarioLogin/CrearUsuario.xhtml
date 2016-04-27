@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./../../plantilla/PlantillaMobick.xhtml">
+
+            <ui:define name="titulo">
+                Crear Usuario
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form style="margin-left: 80%;"> 
+                    <i class="fa fa-list fa-2x" style="color: #D9534F">
+                        <h:commandLink style="font-family: sans-serif; font-size:16px; margin-left:10px; color: black;" action="UsuarioLoginn?faces-redirect=true" value="Ver todas las cuentas"> </h:commandLink></i>
+                </h:form>
+                <h:outputLabel value="Nueva cuenta" style="color: #D9534F; font-size:25px; font-family:arial;"/>
+                <hr/>
+                <center>  <h:form>
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <p:inputText style="width:300px;" class="form-control" id="usuario" value="#{usuarioLoginController.selected.usuario}" title="#{bundle.CreateUsuarioLoginTitle_usuario}" required="true" requiredMessage="#{bundle.CreateUsuarioLoginRequiredMessage_usuario}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <p:inputText type="password" style="width:300px;" class="form-control" id="contrasena" value="#{usuarioLoginController.selected.contrasena}" title="#{bundle.CreateUsuarioLoginTitle_contrasena}" required="true" requiredMessage="#{bundle.CreateUsuarioLoginRequiredMessage_contrasena}"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <h:selectOneMenu  style="width:300px;" class="form-control" id="empleadodocumento" value="#{usuarioLoginController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_empleadodocumento}">
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione un empleado " itemValue="#{null}"/>
+                                <f:selectItems value="#{empleadoController.listar()}"
+                                               var="empleadodocumentoItem"
+                                               itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres}"/>
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de Rol</label>
+                            <h:selectOneMenu style="width:300px;" class="form-control" id="rolIdrol" value="#{usuarioLoginController.selected.rolIdrol}" required="true" requiredMessage="#{bundle.EditUsuarioLoginRequiredMessage_rolIdrol}">
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione el Tipo de Rol " itemValue="#{null}"/>
+                                <f:selectItems value="#{rolController.itemsAvailableSelectOne}"
+                                               var="rolIdrolItem"
+                                               itemValue="#{rolIdrolItem}" itemLabel="#{rolIdrolItem.tipoRol}"/>
+                            </h:selectOneMenu>
+                        </div>
+
+                        <h:commandButton class="btn btn-success" value="Crear Usuario" type="submit" style="background-color: #D9534F; border: none;" actionListener="#{usuarioLoginController.create}"  action="#{usuarioLoginController.limpiarU()}"/>
+
+                    </h:form></center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

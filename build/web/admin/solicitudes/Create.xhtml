@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+      xmlns:p="http://primefaces.org/ui"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"    
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="SolicitudesCreateDlg" widgetVar="SolicitudesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSolicitudesTitle}">
+            <h:form id="SolicitudesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solicitudesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_fechaSolicitud}" for="fechaSolicitud" />
+                        <p:calendar id="fechaSolicitud" pattern="MM/dd/yyyy" value="#{solicitudesController.selected.fechaSolicitud}" title="#{bundle.EditSolicitudesTitle_fechaSolicitud}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_fechaSolicitud}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_fechaEntrega}" for="fechaEntrega" />
+                        <p:calendar id="fechaEntrega" pattern="MM/dd/yyyy" value="#{solicitudesController.selected.fechaEntrega}" title="#{bundle.EditSolicitudesTitle_fechaEntrega}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_fechaEntrega}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_empleadodocumento}" for="empleadodocumento" />
+                        <p:selectOneMenu id="empleadodocumento" value="#{solicitudesController.selected.empleadodocumento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_empleadodocumento}">
+                            <f:selectItems value="#{empleadoController.listar()}"
+                                           var="empleadodocumentoItem"
+                                           itemValue="#{empleadodocumentoItem}" itemLabel="#{empleadodocumentoItem.nombres}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_clientedocumento}" for="clientedocumento" />
+                        <p:selectOneMenu id="clientedocumento" value="#{solicitudesController.selected.clientedocumento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_clientedocumento}">
+                            <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
+                                           var="clientedocumentoItem"
+                                           itemValue="#{clientedocumentoItem}" itemLabel="#{clientedocumentoItem.nombres}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_tipoSolicitudIdtipoSolicitud}" for="tipoSolicitudIdtipoSolicitud" />
+                        <p:selectOneMenu id="tipoSolicitudIdtipoSolicitud" value="#{solicitudesController.selected.tipoSolicitudIdtipoSolicitud}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_tipoSolicitudIdtipoSolicitud}">
+                            <f:selectItems value="#{tipoSolicitudController.itemsAvailableSelectOne}"
+                                           var="tipoSolicitudIdtipoSolicitudItem"
+                                           itemValue="#{tipoSolicitudIdtipoSolicitudItem}" itemLabel="#{tipoSolicitudIdtipoSolicitudItem.descripcionSolicitud}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_transportadordocumento}" for="transportadordocumento" />
+                        <p:selectOneMenu id="transportadordocumento" value="#{solicitudesController.selected.transportadordocumento}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_transportadordocumento}">
+                            <f:selectItems value="#{transportadorController.itemsAvailableSelectOne}"
+                                           var="transportadordocumentoItem"
+                                           itemValue="#{transportadordocumentoItem}" itemLabel="#{transportadordocumentoItem.nombres}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_formadepagoidFormadepago}" for="formadepagoidFormadepago" />
+                        <p:selectOneMenu id="formadepagoidFormadepago" value="#{solicitudesController.selected.formadepagoidFormadepago}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_formadepagoidFormadepago}">
+                            <f:selectItems value="#{formaDePagoController.itemsAvailableSelectOne}"
+                                           var="formadepagoidFormadepagoItem"
+                                           itemValue="#{formadepagoidFormadepagoItem}" itemLabel="#{formadepagoidFormadepagoItem.descripcionPago}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudesLabel_estadoSolicitudIdestadoSolicitud}" for="estadoSolicitudIdestadoSolicitud" />
+                        <p:selectOneMenu id="estadoSolicitudIdestadoSolicitud" value="#{solicitudesController.selected.estadoSolicitudIdestadoSolicitud}" required="true" requiredMessage="#{bundle.EditSolicitudesRequiredMessage_estadoSolicitudIdestadoSolicitud}">
+                            <f:selectItems value="#{estadoSolicitudController.itemsAvailableSelectOne}"
+                                           var="estadoSolicitudIdestadoSolicitudItem"
+                                           itemValue="#{estadoSolicitudIdestadoSolicitudItem}" itemLabel="#{estadoSolicitudIdestadoSolicitudItem.detallesEstado}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solicitudesController.create}" value="#{bundle.Save}" update="display,:SolicitudesListForm:datalist,:growl" oncomplete="handleSubmit(args,'SolicitudesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SolicitudesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
